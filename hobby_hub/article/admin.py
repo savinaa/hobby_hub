@@ -1,6 +1,6 @@
 from django.contrib import admin
 
 # Register your models here.
-from hobby_hub.article.models import Articles
+from hobby_hub.article.models import Article
 
-admin.site.register(Articles)
+admin.site.register(Article)

@@ -2,12 +2,12 @@ from django.shortcuts import render, redirect
 
 # Create your views here.
 from hobby_hub.article.forms import ArticleForm
-from hobby_hub.article.models import Articles
+from hobby_hub.article.models import Article
 
 
 def index(req):
     context={
-        'articles':Articles.objects.all(),
+        'articles':Article.objects.all(),
         'form':ArticleForm(),
     }
 
