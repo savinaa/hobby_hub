@@ -1,10 +1,10 @@
 <ul>
     {% for article in articles %}
         <li>
-            {{ article.title }}
-            {{ article.description }}
-            {{ article.url }}
-            {{ article.image }}
+            <h1>{{ article.title }}</h1>
+            <br/><p>{{ article.description }}</p>
+            <br/><a href="{{ article.url }}" target="_blank">{{ article.url }}</a>
+            <br/>{{ article.image }}
         </li>
     {% endfor %}
 </ul>
