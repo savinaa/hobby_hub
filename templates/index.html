@@ -5,10 +5,5 @@
 {% endblock %}
 
 {% block content %}
-    <form action="{% url 'create article' %}" method="post">
-        {% csrf_token %}
-        {{ form }}
-        <button>Create article</button>
-    </form>
     {% include 'article/article_view.html' %}
 {% endblock %}
