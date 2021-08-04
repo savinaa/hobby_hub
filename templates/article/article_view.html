@@ -1,0 +1,10 @@
+<ul>
+    {% for article in articles %}
+        <li>
+            {{ article.title }}
+            {{ article.description }}
+            {{ article.url }}
+            {{ article.image }}
+        </li>
+    {% endfor %}
+</ul>
