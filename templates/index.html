@@ -8,6 +8,11 @@
     <title>Document</title>
 </head>
 <body>
+<form action="{% url 'create article' %}" method="post">
+    {% csrf_token %}
+    {{form }}
+    <button>Create article</button>
+</form>
 <ul>
     {% for article in articles %}
         <li>
