@@ -5,7 +5,7 @@
 {% endblock %}
 
 {% block content %}
-    <form action="{% url 'create article' %}" method="post">
+    <form action="{% url 'create article' %}" method="POST">
         {% csrf_token %}
         {{ form }}
         <button>Create article</button>

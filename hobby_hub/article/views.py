@@ -14,10 +14,11 @@ def index(req):
     return render(req, 'index.html',context)
 
 def create_article(req):
-    form=ArticleForm(req.POST)
-    if form.is_valid():
-        form.save()
-        return redirect('index')
+    if req.method=='POST':
+        form=ArticleForm(req.POST)
+        if not form.is_valid():
+            form.save()
+            return redirect('index')
     else:
         form=ArticleForm()
     context={
