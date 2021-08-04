@@ -18,3 +18,6 @@ class Article(models.Model):
     image=models.ImageField(
 
     )
+
+    def __str__(self):
+        return f'Article "{self.title}"'
