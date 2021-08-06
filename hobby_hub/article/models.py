@@ -16,7 +16,7 @@ class Article(models.Model):
     )
 
     image=models.ImageField(
-
+        upload_to='article'
     )
 
     def __str__(self):

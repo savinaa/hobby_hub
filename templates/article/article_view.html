@@ -4,7 +4,7 @@
             <h1>{{ article.title }}</h1>
             <br/><p>{{ article.description }}</p>
             <br/><a href="{{ article.url }}" target="_blank">{{ article.url }}</a>
-            <br/>{{ article.image }}
+            <br/><img src="{{ article.image.url }}"/>
         </li>
     {% endfor %}
 </ul>

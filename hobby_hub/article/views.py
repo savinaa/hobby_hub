@@ -15,8 +15,8 @@ def index(req):
 
 def create_article(req):
     if req.method=='POST':
-        form=ArticleForm(req.POST)
-        if not form.is_valid():
+        form=ArticleForm(req.POST, req.FILES)
+        if form.is_valid():
             form.save()
             return redirect('index')
     else:
