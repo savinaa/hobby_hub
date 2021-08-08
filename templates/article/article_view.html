@@ -1,10 +1,21 @@
-<ul>
-    {% for article in articles %}
-        <li>
-            <h1>{{ article.title }}</h1>
-            <br/><p>{{ article.description }}</p>
-            <br/><a href="{{ article.url }}" target="_blank">{{ article.url }}</a>
-            <br/><img src="{{ article.image.url }}"/>
-        </li>
-    {% endfor %}
-</ul>
+<div class="container-fluid cards-row">
+    <div class="container">
+        <div id="wrapper"{% comment %}class="row"{% endcomment %}>
+            {% for article in articles %}
+                <div class="col-sm-6 col-md-4">
+                    <div class="thumbnail">
+                        <img src="{{ article.image.url }}" class="img-thumbnail"/>
+                        <div class="caption">
+                            <h3>{{ article.title }}</h3>
+                            <p class="card-description">{{ article.description }}</p>
+                         <p align="center">
+                                <a href="{{ article.url }}" target="_blank" class="btn btn-primary"
+                                   role="button">Open</a>
+                           </p>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
