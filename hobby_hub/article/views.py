@@ -26,4 +26,18 @@ def create_article(req):
     }
     return render(req, 'article/create_article.html', context)
 
+def edit_article(req,pk):
+    article= Article.objects.get(pk=pk)
+    if req.method=='POST':
+        form=ArticleForm(req.POST, req.FILES, instance=article)
+        if form.is_valid():
+            form.save()
+            return redirect('index')
+    else:
+        form=ArticleForm(instance=article)
+    context={
+        'form':form,
+    }
+    return render(req, 'article/edit_article.html', context)
+
 

@@ -1,0 +1,17 @@
+{% extends 'shared/base.html' %}
+
+{% block head_title %}
+    Edit article
+{% endblock %}
+
+{% block content %}
+    <form
+            action="{% url 'create article' %}"
+            method="POST"
+            enctype="multipart/form-data"
+    >
+        {% csrf_token %}
+        {{ form }}
+        <button>Edit article</button>
+    </form>
+{% endblock %}
