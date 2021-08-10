@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 
     'hobby_hub.article',
+    'hobby_hub.hobby_hub_auth',
 ]
 
 MIDDLEWARE = [
