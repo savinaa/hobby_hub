@@ -3,6 +3,8 @@ from django.contrib.auth.models import PermissionsMixin
 from django.db import models
 
 # Create your models here.
+from hobby_hub.hobby_hub_auth.managers import HobbyHubUserManager
+
 
 class HobbyHubUser(AbstractBaseUser,PermissionsMixin):
     email=models.EmailField(
@@ -25,4 +27,4 @@ class HobbyHubUser(AbstractBaseUser,PermissionsMixin):
     #    primary_key=True,
     #)
 #
-    #objects = AccountsUserManager()
+    objects = HobbyHubUserManager()
