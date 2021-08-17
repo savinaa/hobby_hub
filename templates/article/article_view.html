@@ -1,3 +1,4 @@
+{% load static %}
 <div class="container-fluid cards-row">
     <div class="container">
         <div id="wrapper"{% comment %}class="row"{% endcomment %}>
@@ -6,12 +7,23 @@
                     <div class="thumbnail">
                         <img src="{{ article.image.url }}" class="img-thumbnail"/>
                         <div class="caption">
-                            <h3>{{ article.title }}</h3>
+                            <div class="title-bar">
+                            <h3 class="float-right">{{ article.title }}</h3>
+                            <div class="dropdown">
+                                <button onclick="myFunction()" class="dropbtn"><img src="{% static 'images/menu.png'%}" class="float-md-right"></button>
+                                <div id="myDropdown" class="dropdown-content">
+                                    <a href="{% url 'edit article' article.id %}">Edit</a>
+                                    <a href="#about">Delete</a>
+                                </div>
+                            </div>
+                                </div>
                             <p class="card-description">{{ article.description }}</p>
-                         <p align="center">
+
+
+                            <p align="center">
                                 <a href="{{ article.url }}" target="_blank" class="btn btn-primary"
                                    role="button">Open</a>
-                           </p>
+                            </p>
                         </div>
                     </div>
                 </div>

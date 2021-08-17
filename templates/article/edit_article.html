@@ -6,7 +6,7 @@
 
 {% block content %}
     <form
-            action="{% url 'create article' %}"
+            action="{% url 'edit article' article.id %}"
             method="POST"
             enctype="multipart/form-data"
     >

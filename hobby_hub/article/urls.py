@@ -7,5 +7,5 @@ from hobby_hub.article.views import index, create_article, edit_article
 urlpatterns=[
     path('', index, name='index'),
     path('create/', create_article, name='create article'),
-    path('edit/', edit_article, name='edit article'),
+    path('edit/<int:pk>', edit_article, name='edit article'),
 ]+static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
