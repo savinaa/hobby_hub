@@ -39,6 +39,17 @@ def edit_article(req,pk):
         'form':form,
         'article':article,
     }
-    return render(req, 'article/edit_article.html', context)
+    return render(req, 'article/article_edit.html', context)
+
+def delete_article(req,pk):
+    article = Article.objects.get(pk=pk)
+    if req.method=='POST':
+        article.delete()
+        return redirect('index')
+    else:
+        context={
+            'article':article,
+        }
+        return render(req,'article/article_delete.html',context)
 
 

@@ -13,7 +13,7 @@
                                 <button onclick="myFunction()" class="dropbtn"><img src="{% static 'images/menu.png'%}" class="float-md-right"></button>
                                 <div id="myDropdown" class="dropdown-content">
                                     <a href="{% url 'edit article' article.id %}">Edit</a>
-                                    <a href="#about">Delete</a>
+                                    <a href="{% url 'delete article' article.id %}">Delete</a>
                                 </div>
                             </div>
                                 </div>
