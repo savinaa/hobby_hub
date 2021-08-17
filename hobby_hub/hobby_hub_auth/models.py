@@ -13,10 +13,6 @@ class HobbyHubUser(AbstractBaseUser, PermissionsMixin):
     email = models.EmailField(
         unique=True,
     )
-    #    profile_picture = models.ImageField(
-    #        upload_to='profiles',
-    #        blank=True,
-    #    )
     is_staff = models.BooleanField(
         default=False,
     )
@@ -24,12 +20,17 @@ class HobbyHubUser(AbstractBaseUser, PermissionsMixin):
         auto_now_add=True,
     )
     USERNAME_FIELD = 'email'
-#
-#    #user = models.OneToOneField(
-#    #    UserModel,
-#    #    on_delete=models.CASCADE,
-#    #    primary_key=True,
-#    #)
-##
+
     objects = HobbyHubUserManager()
 
+
+class Profile(models.Model):
+    profile_picture = models.ImageField(
+        upload_to='profiles',
+        blank=True,
+    )
+    user = models.OneToOneField(
+        HobbyHubUser,
+        on_delete=models.CASCADE,
+        primary_key=True,
+    )
