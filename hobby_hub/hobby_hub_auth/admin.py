@@ -1,12 +1,14 @@
 from django.contrib import admin
 
 # Register your models here.
+from django.contrib.auth import get_user_model
 from django.contrib.auth.admin import UserAdmin
 
 from hobby_hub.hobby_hub_auth.models import HobbyHubUser
 
+UserModel=get_user_model()
 
-@admin.register(HobbyHubUser)
+@admin.register(UserModel)
 class HobbyHubAdmin(UserAdmin):
     list_display = ('email', 'is_staff')
     list_filter = ('is_staff', 'is_superuser', 'groups')
@@ -25,4 +27,4 @@ class HobbyHubAdmin(UserAdmin):
             'fields': ('email', 'password1', 'password2'),
         }),
     )
-    #readonly_fields = ('date_joined',)
+    readonly_fields = ('date_joined','email', 'last_login')
