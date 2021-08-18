@@ -1,3 +1,4 @@
+from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect
 
 # Create your views here.
@@ -13,6 +14,7 @@ def index(req):
 
     return render(req, 'index.html',context)
 
+@login_required
 def create_article(req):
     if req.method=='POST':
         form=ArticleForm(req.POST, req.FILES)
