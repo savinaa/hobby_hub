@@ -1,0 +1,51 @@
+{% extends 'shared/base.html' %}
+
+{% block content %}
+    {% csrf_token %}
+    <div class="d-flex">
+        <div class="d-inline p-2 w-50">
+            <img src="{{ article.image.url }}" class="w-50 rounded mx-auto d-block">
+        </div>
+        <div class="d-inline p-2 w-50">
+            <div class="d-flex justify-content-between">
+                <h5><u>Title:</u> {{ article.title }}</h5>
+                <p class="mt-2">Description: {{ article.description }}</p>
+                <p align="center">
+                    <a href="{{ article.url }}" target="_blank" class="btn btn-primary"
+                       role="button">Open Article</a>
+                </p>
+
+            </div>
+
+            {% if is_owner %}
+                <div>
+                    <a href="{% url 'edit article' pet.id %}" class="btn btn-success">Edit</a>
+                    <a href="{% url 'delete article' pet.id %}" class="btn btn-danger">Delete</a>
+                </div>
+            {% endif %}
+            {% if not is_owner %}
+                <a href="{% url 'article likes' article.id %}"><i class="fa fa-heart-o" aria-hidden="true"></i></a>
+            {% endif %}
+            <p class="mt-2">Likes: {{ article.likes_count }}</p>
+            <div class="d-block" style="background-color: #f1e3e3; padding:2%">
+                if comments
+                for each comment
+                <div class="box">
+                    <h5><em>comment_content</em></h5>
+                    <hr>
+                </div>
+                else
+                <div class="box">
+                    <h5><em>There are no comments for this pet</em></h5>
+                    <hr>
+                </div>
+                {% if not is_owner %}
+                    <div class="box">
+                        {{ comment_form }}
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

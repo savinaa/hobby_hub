@@ -29,3 +29,9 @@ class Article(models.Model):
 
     def __str__(self):
         return f'Article "{self.title}"'
+
+class Like(models.Model):
+    article=models.ForeignKey(
+        Article,
+        on_delete=models.CASCADE
+    )

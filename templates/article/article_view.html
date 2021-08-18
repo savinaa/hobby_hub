@@ -8,22 +8,18 @@
                         <img src="{{ article.image.url }}" class="img-thumbnail"/>
                         <div class="caption">
                             <div class="title-bar">
-                            <h3 class="float-right">{{ article.title }}</h3>
-                            <div class="dropdown">
-                                <button onclick="myFunction()" class="dropbtn"><img src="{% static 'images/menu.png'%}" class="float-md-right"></button>
-                                <div id="myDropdown" class="dropdown-content">
-                                    <a href="{% url 'edit article' article.id %}">Edit</a>
-                                    <a href="{% url 'delete article' article.id %}">Delete</a>
-                                </div>
+                                <h3 class="float-right">{{ article.title }}</h3>
                             </div>
-                                </div>
-                            <p class="card-description">{{ article.description }}</p>
+
+                            <div>
+                                <a href="{{ article.url }}" target="_blank" class="btn-custom btn-primary float-md-left "
+                                   role="button">Open Article</a>
+
+                                <a href="{% url 'article details' article.id %}" target="_blank" class="btn-custom btn-primary float-md-right"
+                                   role="button">Details</a>
+                            </div>
 
 
-                            <p align="center">
-                                <a href="{{ article.url }}" target="_blank" class="btn btn-primary"
-                                   role="button">Open</a>
-                            </p>
                         </div>
                     </div>
                 </div>
