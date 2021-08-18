@@ -5,8 +5,8 @@ from django.core.exceptions import ValidationError
 
 class SignInForm(forms.Form):
     user=None
-    username=forms.CharField(
-        max_length=30,
+    email=forms.EmailField(
+
     )
     password = forms.CharField(
         max_length=15,
@@ -15,12 +15,12 @@ class SignInForm(forms.Form):
 
     def clean_password(self):
         self.user=authenticate(
-                username=self.cleaned_data['username'],
+                email=self.cleaned_data['email'],
                 password=self.cleaned_data['password'],
             )
 
         if not self.user:
-            raise ValidationError('Username and/or password not correct!')
+            raise ValidationError('Email and/or password not correct!')
 
     def save(self):
         return self.user

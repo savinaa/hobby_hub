@@ -31,7 +31,7 @@ def sign_in(req):
     context={
         'form':form,
     }
-    return render(req,'auth/sign_in.html',context)
+    return render(req,'auth/accounts/login.html',context)
 
 @login_required
 def sign_out(req):
