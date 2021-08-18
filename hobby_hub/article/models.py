@@ -1,6 +1,9 @@
+from django.contrib.auth import get_user_model
 from django.db import models
 
 # Create your models here.
+
+UserModel=get_user_model()
 
 class Article(models.Model):
     title=models.CharField(
@@ -17,6 +20,11 @@ class Article(models.Model):
 
     image=models.ImageField(
         upload_to='article'
+    )
+
+    user = models.ForeignKey(
+        UserModel,
+        on_delete=models.CASCADE,
     )
 
     def __str__(self):
