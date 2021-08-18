@@ -19,7 +19,9 @@ def create_article(req):
     if req.method=='POST':
         form=ArticleForm(req.POST, req.FILES)
         if form.is_valid():
-            form.save()
+            article=form.save(commit=False)
+            article.user=req.user
+            article.save()
             return redirect('index')
     else:
         form=ArticleForm()

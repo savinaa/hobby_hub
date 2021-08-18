@@ -11,6 +11,7 @@ class ArticleForm(forms.ModelForm):
     class Meta:
         model=Article
         fields='__all__'
+        exclude=('user',)
 
 class EditArticleForm(ArticleForm):
     def save(self, commit=True):
