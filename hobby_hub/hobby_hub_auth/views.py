@@ -4,16 +4,18 @@ from django.contrib.auth.forms import UserCreationForm
 from django.shortcuts import render, redirect
 
 # Create your views here.
-from hobby_hub.hobby_hub_auth.forms import SignInForm
+from hobby_hub.hobby_hub_auth.forms import SignInForm, SignUpForm
+
 
 def sign_up(req):
     if req.POST:
-        form=UserCreationForm(req.POST)
+        form=SignUpForm(req.POST)
         if form.is_valid():
-            form.save()
-            return redirect('sign in')
+            user=form.save()
+            login(req,user)
+            return redirect('index')
     else:
-        form=UserCreationForm()
+        form=SignUpForm()
     context={
         'form':form,
     }

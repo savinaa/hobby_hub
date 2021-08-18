@@ -19,8 +19,8 @@
 
             {% if is_owner %}
                 <div>
-                    <a href="{% url 'edit article' pet.id %}" class="btn btn-success">Edit</a>
-                    <a href="{% url 'delete article' pet.id %}" class="btn btn-danger">Delete</a>
+                    <a href="{% url 'edit article' article.id %}" class="btn btn-success">Edit</a>
+                    <a href="{% url 'delete article' article.id %}" class="btn btn-danger">Delete</a>
                 </div>
             {% endif %}
             {% if not is_owner %}
