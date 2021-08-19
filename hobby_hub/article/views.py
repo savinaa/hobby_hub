@@ -25,6 +25,7 @@ def article_details(req,pk):
     }
     return render(req, 'article/article_details.html', context)
 
+@login_required
 def article_like(req, pk):
     article = Article.objects.get(pk=pk)
     like_obj = article.like_set.filter(user_id=req.user.id).first()
@@ -38,6 +39,7 @@ def article_like(req, pk):
         like.save()
     return redirect('article details',pk)
 
+@login_required
 def article_dislike(req, pk):
     article = Article.objects.get(pk=pk)
     dislike_obj = article.dislike_set.filter(user_id=req.user.id).first()
@@ -68,6 +70,7 @@ def create_article(req):
     }
     return render(req, 'article/create_article.html', context)
 
+@login_required
 def edit_article(req,pk):
     article= Article.objects.get(pk=pk)
     if req.method=='POST':
@@ -83,6 +86,7 @@ def edit_article(req,pk):
     }
     return render(req, 'article/article_edit.html', context)
 
+@login_required
 def delete_article(req,pk):
     article = Article.objects.get(pk=pk)
     if req.method=='POST':
