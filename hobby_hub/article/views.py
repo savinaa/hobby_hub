@@ -25,20 +25,31 @@ def article_details(req,pk):
     }
     return render(req, 'article/article_details.html', context)
 
-def url_to_article_like_id(req,pk):
+def article_like(req, pk):
     article = Article.objects.get(pk=pk)
-    like=Like(
-        article=article,
-    )
-    like.save()
+    like_obj = article.like_set.filter(user_id=req.user.id).first()
+    if like_obj:
+        like_obj.delete()
+    else:
+        like=Like(
+            article=article,
+            user=req.user,
+        )
+        like.save()
     return redirect('article details',pk)
 
-def url_to_article_dislike_id(req,pk):
+def article_dislike(req, pk):
     article = Article.objects.get(pk=pk)
-    dislike=Dislike(
-        article=article,
-    )
-    dislike.save()
+    dislike_obj = article.dislike_set.filter(user_id=req.user.id).first()
+    if dislike_obj:
+        dislike_obj.delete()
+    else:
+        dislike = Dislike(
+            article=article,
+            user=req.user,
+        )
+        dislike.save()
+
     return redirect('article details',pk)
 
 @login_required
