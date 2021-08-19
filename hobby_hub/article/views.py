@@ -1,9 +1,13 @@
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import render, redirect
 
 # Create your views here.
 from hobby_hub.article.forms import ArticleForm, EditArticleForm
 from hobby_hub.article.models import Article, Like, Dislike
+from hobby_hub.common.forms import CommentForm
+from hobby_hub.common.models import Comment
+from hobby_hub.core.views import PostOnlyView
 
 
 def index(req):
@@ -19,9 +23,22 @@ def article_details(req,pk):
     article.dislikes_count = article.dislike_set.count()
     is_owner=article.user==req.user
 
+    is_liked_by_user=article.like_set.filter(user_id=req.user.id).exists()
+    is_disliked_by_user=article.dislike_set.filter(user_id=req.user.id).exists()
+
+    comment_form=CommentForm(
+        initial={
+            'article_pk': article.id,
+        }
+    )
+
     context = {
         'article': article,
         'is_owner':is_owner,
+        'is_liked':is_liked_by_user,
+        'is_disliked':is_disliked_by_user,
+        'comments':article.comment_set.all(),
+        'comment_form':comment_form,
     }
     return render(req, 'article/article_details.html', context)
 
@@ -53,6 +70,23 @@ def article_dislike(req, pk):
         dislike.save()
 
     return redirect('article details',pk)
+
+class CommentArticleView(LoginRequiredMixin, PostOnlyView):
+    form_class = CommentForm
+
+    def form_valid(self, form):
+        article = Article.objects.get(pk=self.kwargs['pk'])
+        comment = Comment(
+            text=form.cleaned_data['text'],
+            article=article,
+            user=self.request.user,
+        )
+        comment.save()
+
+        return redirect('article details', article.id)
+
+    def form_invalid(self, form):
+        pass
 
 @login_required
 def create_article(req):
