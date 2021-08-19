@@ -63,9 +63,13 @@
                 {% endif %}
                 {% if not is_owner %}
                     <div class="box">
+                    <form
+                        action="{% url 'comment article' %}"
+                        method="post">
                         {% csrf_token %}
                         {{ comment_form }}
                         <button class="btn btn-primary mt-2" type="submit">Add comment</button>
+                        </form>
                     </div>
                 {% endif %}
             </div>

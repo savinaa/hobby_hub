@@ -1,36 +1,47 @@
 {% extends 'shared/base.html' %}
+{% load static %}
 
 {% block content %}
-  <div class="text-center">
-    <h1>Hello, profile_user!</h1>
-    <h5>This is your profile</h5>
-    <img class="rounded-circle mb-3" src="profile_picture_url" alt="Generic placeholder image" width="140" height="140">
-    <div class="w-50 m-auto">
-      form
-    </div>
-  </div>
-    <hr>
-    if pets
-    <h2 class='text-center'>These are you pet photos</h2>
-  <div class="row">        
-        <div class="row">
-        for pet in pets
-        <div class="col-lg-4">
-            <div class="card" style="width: 18rem;">
-                <img src="{{p.image.url}}" class="card-img-top" alt="...">
-                <div class="card-body">
-                    <h5 class="card-title">pet_type pet_name, Age: pet_age</h5>
-                    <p class="card-text">pet_description</p>
-                    <p class="card-text"><strong>Owner: pet_user</strong></p>
-                    <a href="url to pet details" class="btn btn-primary">See details</a>
-                </div>
-            </div>
+    <div class="text-center">
+        <h1>Hello, {{ request.user }}!</h1>
+        <h5>This is your profile</h5>
+        <img class="rounded-circle mb-3" src="{{ profile.profile_picture.url }}" alt="" width="140" height="140">
+        <div class="w-50 m-auto">
+            <form
+                    action="{% url 'profile details' %}"
+                    method="post"
+                    enctype="multipart/form-data">
+                {% csrf_token %}
+                {{ form }}
+                <button>Update</button>
+            </form>
         </div>
     </div>
-  </div>
-  else
-  <div class="text-center">
-    <h2>You have no pets</h2>
-    <a href="url to pet create" class="btn btn-success">Add Pet Photo</a>
-  </div>
+    <hr>
+    {% if articles %}
+        <h2 class='text-center'>These are your published articles</h2>
+        <div class="row">
+            <div class="row">
+                {% for article in articles %}
+                    <div class="col-lg-4">
+                        <div class="card" style="width: 18rem;">
+                            <img src="{{ article.image }}" class="card-img-top" alt="...">
+                            <div class="card-body">
+                                <h5 class="card-title">{{ article.title }}</h5>
+                                <p class="card-text">{{ article.description }}</p>
+                                <p class="card-text"><strong>Creator: {{ article.user }}</strong></p>
+                                <a href="{{ article.url }}" class="btn btn-primary">Open article</a>
+                                <a href="{% url 'article details' article.id %}" class="btn btn-primary">See details</a>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    {% else %}
+        <div class="text-center">
+            <h2>You have no pets</h2>
+            <a href="{% url 'create article' %}" class="btn btn-success">Add New Article</a>
+        </div>
+    {% endif %}
 {% endblock %}
