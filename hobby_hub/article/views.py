@@ -3,7 +3,7 @@ from django.shortcuts import render, redirect
 
 # Create your views here.
 from hobby_hub.article.forms import ArticleForm, EditArticleForm
-from hobby_hub.article.models import Article, Like
+from hobby_hub.article.models import Article, Like, Dislike
 
 
 def index(req):
@@ -16,6 +16,7 @@ def index(req):
 def article_details(req,pk):
     article = Article.objects.get(pk=pk)
     article.likes_count = article.like_set.count()
+    article.dislikes_count = article.dislike_set.count()
     is_owner=article.user==req.user
 
     context = {
@@ -30,6 +31,14 @@ def url_to_article_like_id(req,pk):
         article=article,
     )
     like.save()
+    return redirect('article details',pk)
+
+def url_to_article_dislike_id(req,pk):
+    article = Article.objects.get(pk=pk)
+    dislike=Dislike(
+        article=article,
+    )
+    dislike.save()
     return redirect('article details',pk)
 
 @login_required

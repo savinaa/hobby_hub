@@ -123,3 +123,10 @@ body {
     display: block;
 }
 
+.likings{
+    display: block;
+}
+.likings p{
+    display: inline;
+}
+

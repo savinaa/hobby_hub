@@ -35,3 +35,9 @@ class Like(models.Model):
         Article,
         on_delete=models.CASCADE
     )
+
+class Dislike(models.Model):
+    article=models.ForeignKey(
+        Article,
+        on_delete=models.CASCADE
+    )
