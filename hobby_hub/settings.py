@@ -42,6 +42,7 @@ INSTALLED_APPS = [
 
     'hobby_hub.article',
     'hobby_hub.hobby_hub_auth',
+    'hobby_hub.common',
 ]
 
 MIDDLEWARE = [
