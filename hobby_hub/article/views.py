@@ -71,22 +71,30 @@ def article_dislike(req, pk):
 
     return redirect('article details',pk)
 
-class CommentArticleView(LoginRequiredMixin, PostOnlyView):
-    form_class = CommentForm
+#class CommentArticleView(LoginRequiredMixin, PostOnlyView):
+#    form_class = CommentForm
+#
+#    def form_valid(self, form):
+#        article = Article.objects.get(pk=self.kwargs['pk'])
+#        comment = Comment(
+#            text=form.cleaned_data['text'],
+#            article=article,
+#            user=self.request.user,
+#        )
+#        comment.save()
+#
+#        return redirect('article details', article.id)
+#
+#    def form_invalid(self, form):
+#        pass
 
-    def form_valid(self, form):
-        article = Article.objects.get(pk=self.kwargs['pk'])
-        comment = Comment(
-            text=form.cleaned_data['text'],
-            article=article,
-            user=self.request.user,
-        )
+def article_comment(req,pk):
+    form=CommentForm(req.POST)
+    if form.is_valid():
+        comment=form.save(comit=False)
+        comment.user=req.user
         comment.save()
-
-        return redirect('article details', article.id)
-
-    def form_invalid(self, form):
-        pass
+    return redirect('article details',pk)
 
 @login_required
 def create_article(req):
