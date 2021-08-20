@@ -3,11 +3,12 @@ from django.contrib.auth import authenticate, get_user_model
 from django.contrib.auth.forms import UserCreationForm
 from django.core.exceptions import ValidationError
 
+from hobby_hub.core.forms import BootstrapFormMixin
 from hobby_hub.hobby_hub_auth.models import Profile
 
 UserModel=get_user_model()
 
-class SignInForm(forms.Form):
+class SignInForm(BootstrapFormMixin,forms.Form):
     user=None
     email=forms.EmailField(
 
@@ -29,12 +30,12 @@ class SignInForm(forms.Form):
     def save(self):
         return self.user
 
-class SignUpForm(UserCreationForm):
+class SignUpForm(BootstrapFormMixin,UserCreationForm):
     class Meta:
         model = UserModel
         fields = ('email',)
 
-class ProfileForm(forms.ModelForm):
+class ProfileForm(BootstrapFormMixin,forms.ModelForm):
     class Meta:
         model=Profile
         fields=('profile_picture',)

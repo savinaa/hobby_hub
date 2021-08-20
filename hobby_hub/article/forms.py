@@ -5,9 +5,10 @@ from django import forms
 
 from hobby_hub import settings
 from hobby_hub.article.models import Article
+from hobby_hub.core.forms import BootstrapFormMixin
 
 
-class ArticleForm(forms.ModelForm):
+class ArticleForm(BootstrapFormMixin,forms.ModelForm):
     class Meta:
         model=Article
         fields='__all__'
