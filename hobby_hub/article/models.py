@@ -8,6 +8,7 @@ UserModel=get_user_model()
 class Article(models.Model):
     title=models.CharField(
         max_length=120,
+        blank=False,
     )
 
     description=models.CharField(
@@ -15,7 +16,7 @@ class Article(models.Model):
     )
 
     url=models.URLField(
-
+        blank=False,
     )
 
     image=models.ImageField(

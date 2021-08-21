@@ -1,6 +1,5 @@
 from django.urls import path
 
-from hobby_hub.article.views import index
 from hobby_hub.common.views import LandingPage
 
 urlpatterns=[

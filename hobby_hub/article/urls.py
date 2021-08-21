@@ -2,8 +2,8 @@ from django.conf.urls.static import static
 from django.urls import path
 
 from hobby_hub import settings
-from hobby_hub.article.views import index, create_article, edit_article, delete_article, article_details, \
-    article_like, article_dislike, article_comment
+from hobby_hub.article.views import create_article, edit_article, delete_article, article_details, \
+    article_like, article_dislike, article_comment, index
 
 urlpatterns=[
     path('', index, name='index'),

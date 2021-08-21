@@ -3,30 +3,33 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import render, redirect
 
 # Create your views here.
-from hobby_hub.article.forms import ArticleForm, EditArticleForm
+from django.urls import reverse_lazy
+from django.views.generic import TemplateView, ListView, CreateView
+
+from hobby_hub.article.forms import CreateArticleForm, EditArticleForm
 from hobby_hub.article.models import Article, Like, Dislike
 from hobby_hub.common.forms import CommentForm
 from hobby_hub.common.models import Comment
-from hobby_hub.core.views import PostOnlyView
+from hobby_hub.core.views import PostOnlyView, BootStrapFormViewMixin
 
 
 def index(req):
-    context={
-        'articles':Article.objects.all(),
-        'form':ArticleForm(),
+    context = {
+        'articles': Article.objects.all(),
     }
-    return render(req, 'index.html',context)
+    return render(req, 'index.html', context)
 
-def article_details(req,pk):
+
+def article_details(req, pk):
     article = Article.objects.get(pk=pk)
     article.likes_count = article.like_set.count()
     article.dislikes_count = article.dislike_set.count()
-    is_owner=article.user==req.user
+    is_owner = article.user == req.user
 
-    is_liked_by_user=article.like_set.filter(user_id=req.user.id).exists()
-    is_disliked_by_user=article.dislike_set.filter(user_id=req.user.id).exists()
+    is_liked_by_user = article.like_set.filter(user_id=req.user.id).exists()
+    is_disliked_by_user = article.dislike_set.filter(user_id=req.user.id).exists()
 
-    comment_form=CommentForm(
+    comment_form = CommentForm(
         initial={
             'article_pk': article.id,
         }
@@ -34,13 +37,14 @@ def article_details(req,pk):
 
     context = {
         'article': article,
-        'is_owner':is_owner,
-        'is_liked':is_liked_by_user,
-        'is_disliked':is_disliked_by_user,
-        'comments':article.comment_set.all(),
-        'comment_form':comment_form,
+        'is_owner': is_owner,
+        'is_liked': is_liked_by_user,
+        'is_disliked': is_disliked_by_user,
+        'comments': article.comment_set.all(),
+        'comment_form': comment_form,
     }
     return render(req, 'article/article_details.html', context)
+
 
 @login_required
 def article_like(req, pk):
@@ -49,12 +53,13 @@ def article_like(req, pk):
     if like_obj:
         like_obj.delete()
     else:
-        like=Like(
+        like = Like(
             article=article,
             user=req.user,
         )
         like.save()
-    return redirect('article details',pk)
+    return redirect('article details', pk)
+
 
 @login_required
 def article_dislike(req, pk):
@@ -69,9 +74,10 @@ def article_dislike(req, pk):
         )
         dislike.save()
 
-    return redirect('article details',pk)
+    return redirect('article details', pk)
 
-#class CommentArticleView(LoginRequiredMixin, PostOnlyView):
+
+# class CommentArticleView(LoginRequiredMixin, PostOnlyView):
 #    form_class = CommentForm
 #
 #    def form_valid(self, form):
@@ -88,56 +94,70 @@ def article_dislike(req, pk):
 #    def form_invalid(self, form):
 #        pass
 
-def article_comment(req,pk):
-    form=CommentForm(req.POST)
+def article_comment(req, pk):
+    form = CommentForm(req.POST)
     if form.is_valid():
-        comment=form.save(comit=False)
-        comment.user=req.user
+        comment = form.save(comit=False)
+        comment.user = req.user
         comment.save()
-    return redirect('article details',pk)
+    return redirect('article details', pk)
+
 
 @login_required
 def create_article(req):
-    if req.method=='POST':
-        form=ArticleForm(req.POST, req.FILES)
+    if req.method == 'POST':
+        form = CreateArticleForm(req.POST, req.FILES)
         if form.is_valid():
-            article=form.save(commit=False)
-            article.user=req.user
+            article = form.save(commit=False)
+            article.user = req.user
             article.save()
             return redirect('index')
     else:
-        form=ArticleForm()
-    context={
-        'form':form,
+        form = CreateArticleForm()
+    context = {
+        'form': form,
     }
     return render(req, 'article/create_article.html', context)
 
+
+#class ArticleCreateView(LoginRequiredMixin, BootStrapFormViewMixin, CreateView):
+#    model = Article
+#    template_name = 'create_article.html'
+#    success_url = reverse_lazy("index")
+#    form_class = ArticleForm
+#
+#    def form_valid(self, form):
+#        article = form.save(commit=False)
+#        article.user = self.request.user
+#        article.save()
+#        return super().form_valid(form)
+
+
 @login_required
-def edit_article(req,pk):
-    article= Article.objects.get(pk=pk)
-    if req.method=='POST':
-        form=EditArticleForm(req.POST, req.FILES, instance=article)
+def edit_article(req, pk):
+    article = Article.objects.get(pk=pk)
+    if req.method == 'POST':
+        form = EditArticleForm(req.POST, req.FILES, instance=article)
         if form.is_valid():
             form.save()
             return redirect('index')
     else:
-        form=EditArticleForm(instance=article)
-    context={
-        'form':form,
-        'article':article,
+        form = EditArticleForm(instance=article)
+    context = {
+        'form': form,
+        'article': article,
     }
     return render(req, 'article/article_edit.html', context)
 
+
 @login_required
-def delete_article(req,pk):
+def delete_article(req, pk):
     article = Article.objects.get(pk=pk)
-    if req.method=='POST':
+    if req.method == 'POST':
         article.delete()
         return redirect('index')
     else:
-        context={
-            'article':article,
+        context = {
+            'article': article,
         }
-        return render(req,'article/article_delete.html',context)
-
-
+        return render(req, 'article/article_delete.html', context)
